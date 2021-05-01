@@ -12,23 +12,23 @@ namespace TreinamentoApplication
             Console.WriteLine("Bem Vindos ao Treinamento .NET");
 
             //criando uma lista de objetos que implementam a interface IVeiculo
-            var listCarro = new List<IVeiculo>();
+            var listCarro = new List<Carro>();
 
-            //instanciando um carro invocando o construto defaul
+            //instanciando um carro invocando o construtor default
             Carro veiculo = new Carro();
 
             //populando a lista...
-            listCarro.Add(new Carro("verde", "fusca"));
-            listCarro.Add(new Carro("azul", "fusca"));
-            listCarro.Add(new Carro("azul", "vectra"));
-            listCarro.Add(new Carro("branco", "gol"));
+            listCarro.Add(new Carro("verde", "fusca",1));
+            listCarro.Add(new Carro("azul", "fusca",1));
+            listCarro.Add(new Carro("azul", "vectra",2));
+            listCarro.Add(new Carro("branco", "gol",1));
             //instanciando um objeto carro utilizando um inicializado de objetos
             //ao invés de invocar um construtor
-            listCarro.Add(new Carro
-            {
-                Cor = "branco",
-                Nome = "uno"
-            });
+            //listCarro.Add(new Carro
+            //{
+            //    Cor = "branco",
+            //    Nome = "uno"
+            //});
 
             //consulta LINQ no formato method query
             //Obs.: Atenção para a transformação que está sendo feita através do método Select()
@@ -51,11 +51,32 @@ namespace TreinamentoApplication
                                  };
 
             //iterando sob a lista e imprimindo no console os valores das propriedades dos objetos.
-            foreach (var v in listaOrdenada2)
+            var carroRepositorio = new CarroRepositorio();
+            ///carroRepositorio.AddCarro(listCarro);
+            //var carro = carroRepositorio.ObterPorId(11);
+            //carro.Cor = "Preto";
+            //carroRepositorio.Atualizar(carro);
+            try
             {
-                Console.WriteLine($"{v.Tipo}: {v.Cor}");
-                Console.WriteLine($"Nome: {v.Nome}");
+               // carroRepositorio.AdicionarVarios(listCarro);
+                var carros = carroRepositorio.ObterPorPaisOrigem("alemanha");
+                foreach (var carro in carros)
+                {
+                    Console.WriteLine($"{carro.Tipo}: {carro.Cor}");
+                    Console.WriteLine($"Nome: {carro.Nome}");
+                }
             }
+            catch (Exception ex)
+            {
+
+               Console.WriteLine(ex.Message);
+            }
+            
+            //foreach (var v in listCarro)
+            //{
+            //    Console.WriteLine($"{v.Tipo}: {v.Cor}");
+            //    Console.WriteLine($"Nome: {v.Nome}");
+            //}
 
             Console.ReadKey();
 
