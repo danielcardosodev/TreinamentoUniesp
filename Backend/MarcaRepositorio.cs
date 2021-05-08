@@ -8,9 +8,23 @@ namespace Backend
 {
     public class MarcaRepositorio : IRepositorio<Marca>
     {
+        private FrotaContext context;
+        public MarcaRepositorio()
+        {
+            this.context = new FrotaContext();
+        }
         public void Adicionar(Marca entidade)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.context.Set<Marca>().Add(entidade);
+                this.context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Falha ao cadastrar: {ex.Message}");
+            }
         }
 
         public void AdicionarVarios(List<Marca> entidades)
@@ -20,17 +34,35 @@ namespace Backend
 
         public void Atualizar(Marca entidade)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.context.Set<Marca>().Update(entidade);
+                this.context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Falha ao atualizar: {ex.Message}");
+            }
         }
 
         public void Deletar(Marca entidade)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.context.Set<Marca>().Remove(entidade);
+                this.context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Não foi possível excluir a marcar {entidade.Nome}: {ex.Message}");
+            }
         }
 
         public Marca ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            return this.context.Set<Marca>().Find(id);
         }
 
         public List<Marca> ObterPorNome(string nome)
@@ -40,7 +72,7 @@ namespace Backend
 
         public List<Marca> ObterTodos()
         {
-            throw new NotImplementedException();
+            return this.context.Set<Marca>().ToList();
         }
     }
 }

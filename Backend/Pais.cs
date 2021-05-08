@@ -14,5 +14,8 @@ namespace Backend
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Nome { get; set; }
+
+        public virtual ICollection<Marca> Marcas { get; set; }
+
     }
 }
